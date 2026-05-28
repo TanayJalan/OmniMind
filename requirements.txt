@@ -1,0 +1,13 @@
+langchain
+langchain-community
+langchain-groq
+chromadb
+streamlit
+pypdf
+tiktoken
+beautifulsoup4
+faiss-cpu
+python-dotenv
+sentence-transformers
+groq
+requests
