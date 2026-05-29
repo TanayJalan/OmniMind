@@ -1,6 +1,5 @@
-omnimind-env/
-venv/
+omnimind-env
 .env
-__pycache__/
-*.pyc
-data/
+data
+__pycache__
+.DS_Store
