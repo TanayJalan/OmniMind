@@ -1,6 +1,8 @@
+# ── Phase 1 ──────────────────────────────────
 langchain
 langchain-community
 langchain-groq
+langchain-text-splitters
 chromadb
 streamlit
 pypdf
@@ -10,4 +12,9 @@ faiss-cpu
 python-dotenv
 sentence-transformers
 groq
-requests
+
+# ── Phase 2 ──────────────────────────────────
+pytesseract          # OCR Python wrapper (needs: brew install tesseract)
+ultralytics          # YOLOv8 object detection
+google-generativeai  # Gemini Flash vision Q&A
+Pillow               # Image processing
