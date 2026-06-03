@@ -1,8 +1,9 @@
 omnimind-env
 .env
 data
-__pycache__
 .DS_Store
 **/__pycache__/
 *.pyc
 *.pt
+*.bin
+*.safetensors
