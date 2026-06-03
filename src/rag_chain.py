@@ -52,7 +52,7 @@ def get_llm():
     temperature=0.2 → mostly factual, slight creativity allowed
     """
     return ChatGroq(
-        model_name="llama-3.3-70b-versatile",
+        model_name="llama-3.1-8b-instant",
         temperature=0.2,
         groq_api_key=os.getenv("GROQ_API_KEY"),
     )

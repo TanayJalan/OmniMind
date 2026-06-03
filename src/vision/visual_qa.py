@@ -27,9 +27,8 @@ load_dotenv()
 # Configure Gemini with API key
 genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
 
-# gemini-1.5-flash — fast, free, multimodal
+# gemini-2.5-flash — fast, free, multimodal
 MODEL_NAME = "gemini-2.5-flash"
-
 
 
 def ask_about_image(image: Image.Image, question: str) -> dict:
