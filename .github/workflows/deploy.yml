@@ -51,6 +51,7 @@ jobs:
                   "*.safetensors",
                   "mlflow.db",
                   "*.sqlite3",
+                  "*.ipynb",          # ← add this line
               ],
           )
 
