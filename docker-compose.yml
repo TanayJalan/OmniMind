@@ -1,0 +1,46 @@
+# ─────────────────────────────────────────────────────────────────
+#  docker-compose.yml — Run OmniMind + MLflow together
+#
+#  Start everything:  docker-compose up --build
+#  Stop everything:   docker-compose down
+#
+#  Services:
+#    omnimind  → Streamlit app at http://localhost:8501
+#    mlflow    → MLflow dashboard at http://localhost:5001
+# ─────────────────────────────────────────────────────────────────
+
+services:
+
+  # ── OmniMind Streamlit App ─────────────────────────────────────
+  omnimind:
+    build: .
+    container_name: omnimind-app
+    ports:
+      - "8501:7860"       # map host:8501 → container:7860
+    env_file:
+      - .env              # loads GROQ_API_KEY and GOOGLE_API_KEY
+    environment:
+      - MLFLOW_TRACKING_URI=http://mlflow:5000  # talk to MLflow container
+    volumes:
+      - ./data:/app/data        # persist ChromaDB and uploads
+      - ./mlruns:/app/mlruns    # persist MLflow runs
+    depends_on:
+      - mlflow
+    restart: unless-stopped
+
+  # ── MLflow Tracking Server ────────────────────────────────────
+  mlflow:
+    image: python:3.12-slim
+    container_name: omnimind-mlflow
+    working_dir: /mlflow
+    ports:
+      - "5001:5000"       # MLflow dashboard at http://localhost:5001
+    volumes:
+      - ./mlruns:/mlflow/mlruns   # shared with app container
+    command: >
+      sh -c "pip install mlflow -q &&
+             mlflow server
+             --host 0.0.0.0
+             --port 5000
+             --backend-store-uri /mlflow/mlruns"
+    restart: unless-stopped

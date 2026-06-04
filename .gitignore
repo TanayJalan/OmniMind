@@ -6,4 +6,5 @@ data
 *.pyc
 *.pt
 *.bin
-*.safetensors
+*.safetensorsmlflow.db
+mlruns/
