@@ -1,3 +1,15 @@
+---
+title: OmniMind
+emoji: 🧠
+colorFrom: purple
+colorTo: blue
+sdk: docker
+app_port: 7860
+pinned: false
+---
+
+
+
 # 🧠 OmniMind — Phase 1
 
 A RAG chatbot that answers questions from your PDFs and websites. Powered by Groq (free) + ChromaDB + sentence-transformers.
