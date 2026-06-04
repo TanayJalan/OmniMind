@@ -20,23 +20,25 @@ jobs:
           HF_TOKEN:    ${{ secrets.HF_TOKEN }}
           HF_USERNAME: ${{ secrets.HF_USERNAME }}
         run: |
-          # Remove large/unwanted files before pushing to HF
-          rm -rf data/chroma_db mlruns omnimind-env
-          find . -name "__pycache__" -exec rm -rf {} + 2>/dev/null || true
-          find . -name "*.pyc"  -delete 2>/dev/null || true
-          find . -name "*.pt"   -delete 2>/dev/null || true
-          find . -name "*.bin"  -delete 2>/dev/null || true
-          find . -name "mlflow.db" -delete 2>/dev/null || true
-
-          # Create a fresh git repo with only clean files
+          # Create fresh git repo — never use git add . (avoids picking up data/)
           rm -rf .git
           git init
           git config user.email "github-actions@github.com"
           git config user.name  "GitHub Actions"
-          git add .
+
+          # Explicitly add only what HuggingFace Spaces needs
+          # data/ is intentionally excluded
+          git add api/ 2>/dev/null || true
+          git add src/ 2>/dev/null || true
+          git add data_pipeline/ 2>/dev/null || true
+          git add mlflow_tracking/ 2>/dev/null || true
+          git add .github/ 2>/dev/null || true
+          git add app.py Dockerfile docker-compose.yml requirements.txt
+          git add README.md .env.example .gitignore
+          git add OmniMind_Phase3_Finetune.ipynb 2>/dev/null || true
+
           git commit -m "Deploy OmniMind to HuggingFace Spaces"
 
-          # Force push fresh history to HF Space
           SPACE_URL="https://${HF_USERNAME}:${HF_TOKEN}@huggingface.co/spaces/${HF_USERNAME}/omnimind"
           git remote add space "$SPACE_URL"
           git push space main --force
